@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Online Saya</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',sans-serif;background:#f5f7fa;padding:20px;line-height:1.6;}
+    h1{text-align:center;color:#2c3e50;margin:40px 0 10px;font-size:2.8em;}
+
+    /* Search bar */
+    .search-wrapper{max-width:400px;margin:0 auto 20px;display:flex;gap:10px;}
+    .search-wrapper input{
+      flex:1;padding:10px 14px;border-radius:999px;border:1px solid #d1d5db;
+      font-size:14px;outline:none;
+    }
+    .search-wrapper input:focus{
+      border-color:#667eea;box-shadow:0 0 0 2px rgba(102,126,234,0.2);
+    }
+
+    /* Category buttons */
+    .category-tabs{
+      display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+      margin-bottom:25px;max-width:1200px;margin-left:auto;margin-right:auto;
+    }
+    .category-btn{
+      padding:10px 18px;border-radius:25px;border:none;background:#f1f5f9;
+      color:#475569;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.3s;
+    }
+    .category-btn:hover,.category-btn.active{
+      background:linear-gradient(45deg,#667eea,#764ba2);color:#fff;
+      box-shadow:0 5px 15px rgba(102,126,234,0.3);
+    }
+
+    .product-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:30px;max-width:1200px;margin:0 auto;
+    }
+    .product-card{
+      background:#fff;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.08);
+      padding:25px;text-align:center;transition:all 0.4s;overflow:hidden;
+      position:relative;
+    }
+    .product-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:5px;
+      background:linear-gradient(90deg,#667eea,#764ba2);
+    }
+    .product-card:hover{transform:translateY(-12px);box-shadow:0 25px 50px rgba(0,0,0,0.15);}
+
+    /* GAMBAR PRODUK BESAR - DIPERBESAR */
+    .product-image{
+      width:200px;height:200px;margin:0 auto 15px;border-radius:16px;
+      object-fit:cover;box-shadow:0 10px 25px rgba(0,0,0,0.15);
+      transition:all 0.3s;border:3px solid #f8fafc;
+    }
+    .product-card:hover .product-image{
+      transform:scale(1.05);box-shadow:0 20px 40px rgba(0,0,0,0.25);
+      border-color:#667eea;
+    }
+
+    .product-name{font-size:1.4em;font-weight:700;margin-bottom:8px;color:#2c3e50;}
+    .product-price{font-size:1.3em;color:#e74c3c;font-weight:600;margin-bottom:20px;}
+    .btn{display:inline-block;padding:12px 30px;background:linear-gradient(45deg,#667eea,#764ba2);
+      color:#fff;text-decoration:none;border-radius:25px;font-weight:600;font-size:1em;
+      box-shadow:0 5px 20px rgba(102,126,234,0.4);transition:all 0.3s;}
+    .btn:hover{background:linear-gradient(45deg,#5a67d8,#6b46c1);transform:translateY(-2px);
+      box-shadow:0 8px 25px rgba(102,126,234,0.6);}
+   
+    .no-result{text-align:center;margin-top:20px;color:#6b7280;font-size:14px;display:none;}
+    .hidden{display:none !important;}
+  </style>
+</head>
+<body>
+  <h1>🛒 ORKA STORE</h1>
+
+  <!-- Search -->
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="Cari produk... (iphone, sofa, skincare...)"
+      onkeyup="filterProducts()">
+  </div>
+
+  <!-- Category Filter Buttons -->
+  <div class="category-tabs" id="categoryTabs">
+    <button class="category-btn active" onclick="setCategory('all')">Semua Produk</button>
+    <button class="category-btn" onclick="setCategory('furniture')">Furniture</button>
+    <button class="category-btn" onclick="setCategory('skincare')">Skincare</button>
+    <button class="category-btn" onclick="setCategory('fashion')">Fashion</button>
+    <button class="category-btn" onclick="setCategory('food')">Food</button>
+    <button class="category-btn" onclick="setCategory('elektronik')">Elektronik</button>
+    <button class="category-btn" onclick="setCategory('perfume')">Perfume</button>
+    <button class="category-btn" onclick="setCategory('makeup')">Makeup</button>
+    <button class="category-btn" onclick="setCategory('automotive')">Automotive</button>
+    <button class="category-btn" onclick="setCategory('material')">Material</button>
+    <button class="category-btn" onclick="setCategory('animal')">Animal</button>
+    <button class="category-btn" onclick="setCategory('residence')">Residence</button>
+    <button class="category-btn" onclick="setCategory('health')">Health & Sanitation</button>
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- ELEKTRONIK -->
+    <div class="product-card" data-category="elektronik">
+      <img src="images/iphone17promaxx.png" alt="iPhone 15 Pro Max" class="product-image">
+      <div class="product-name">001 iPhone 17 Pro Max</div>
+      <div class="product-price">Rp 5.000.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9dJEDG4Rjj1-2W3i0/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+   
+    <div class="product-card" data-category="elektronik">
+      <img src="images/earpone 1px7.png" alt="Apple Watch" class="product-image">
+      <div class="product-name">002 HEADSET BLUETOOTH IPX7 WITH POWERBANK 2</div>
+      <div class="product-price">Rp 15.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9de1ebBuqQW-YtMSq/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+   
+    <div class="product-card" data-category="elektronik">
+      <img src="images/earphone tidur.png" alt="Sony Headphone" class="product-image">
+      <div class="product-name">003 Earphone Tidur Suara Stereo Level HiFi, Tahan Air</div>
+      <div class="product-price">Rp 5.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9de83bLRwKD-vfcWP/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- FURNITURE -->
+    <div class="product-card" data-category="furniture">
+      <img src="images/SOFA ANGIN.png" alt="Sofa" class="product-image">
+      <div class="product-name">004 Sofa Angin Kursi </div>
+      <div class="product-price">Rp 100.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9deYPWcGUnG-T1Y2P/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- SKINCARE -->
+    <div class="product-card" data-category="skincare">
+      <img src="images/PAKET WAJAH booster.png" alt="Serum" class="product-image">
+      <div class="product-name">005 PAKET WAJAH BOOSTER GRADE A </div>
+      <div class="product-price">Rp 30.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9de2PvW4j4L-Lh23a/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- FASHION -->
+    <div class="product-card" data-category="fashion">
+      <img src="images/sarko.png" alt="Dress" class="product-image">
+      <div class="product-name">006 Sarung Dan Koko Lengan Panjang Motif Batik</div>
+      <div class="product-price">Rp 60.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9dejfvm285Y-TMlsV/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- FOOD -->
+    <div class="product-card" data-category="food">
+      <img src="images/sambel 01.png" alt="Indomie" class="product-image">
+      <div class="product-name">007 SAMBAL JALAPENODES ALL VARIANT</div>
+      <div class="product-price">Rp 20.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9de6PFpUACa-kb37c/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- PERFUME -->
+    <div class="product-card" data-category="perfume">
+      <img src="images/parfum 4.png" alt="Perfume" class="product-image">
+      <div class="product-name">008 4 PARFUM PRIA WANITA </div>
+      <div class="product-price">Rp 20.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9de6T19w4DN-AgzAL/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- MAKEUP -->
+    <div class="product-card" data-category="makeup">
+      <img src="images/foundation.png" alt="Lipstick" class="product-image">
+      <div class="product-name">009 SANIYE LIVE Primer Cream Invisible Pore R3092 </div>
+      <div class="product-price">Rp 20.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9deMxCShrKE-uVy7J/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- AUTOMOTIVE -->
+    <div class="product-card" data-category="automotive">
+      <img src="images/biled.png" alt="Tire" class="product-image">
+      <div class="product-name">010 Biled  mini 2.5 INC D2 D3</div>
+      <div class="product-price">Rp 30.000</div>
+      <a href=" https://vt.tokopedia.com/t/ZS9derL1Mvq5M-CyvPQ/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- MATERIAL -->
+    <div class="product-card" data-category="material">
+      <img src="images/wallpaper 01.png" alt="Cement" class="product-image">
+      <div class="product-name">004 Wallpaper Dinding Motif Vinyl Marble</div>
+      <div class="product-price">Rp 10.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9deNSMxBUn9-UTH0T/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- ANIMAL -->
+    <div class="product-card" data-category="animal">
+      <img src="images/makanan kucing 1.png" alt="Dog Food" class="product-image">
+      <div class="product-name">011 Snack Kucing Makanan Kucing Basah Bergizi isi 50</div>
+      <div class="product-price">Rp 21.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9derGmdJG3x-2Eo2v/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- RESIDENCE -->
+    <div class="product-card" data-category="residence">
+      <img src="images/pembersih toilet.png" alt="Door" class="product-image">
+      <div class="product-name">012 Toilet Cleaner-Pembersih kerak kamar mandi</div>
+      <div class="product-price">Rp 20.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9dehSV1SHxQ-Vgb9E/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+
+    <!-- HEALTH -->
+    <div class="product-card" data-category="health">
+      <img src="images/madu kesehatan.png" alt="Mask" class="product-image">
+      <div class="product-name">013 Madu Kecerdasan dan Nafsu Makan </div>
+      <div class="product-price">Rp 30.000</div>
+      <a href="https://vt.tokopedia.com/t/ZS9dehbmbtj6J-v3xYT/" class="btn" target="_blank">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <div id="noResult" class="no-result">Produk tidak ditemukan.</div>
+
+  <script>
+    let currentCategory = 'all';
+
+    function setCategory(category) {
+      currentCategory = category;
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick').includes(category));
+      });
+      filterProducts();
+    }
+
+    function filterProducts(){
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      const noResultText = document.getElementById('noResult');
+      let anyVisible = false;
+
+      cards.forEach(card => {
+        const name = card.querySelector('.product-name').innerText.toLowerCase();
+        const category = card.getAttribute('data-category');
+       
+        const matchesSearch = name.includes(input);
+        const matchesCategory = currentCategory === 'all' || category === currentCategory;
+       
+        if(matchesSearch && matchesCategory){
+          card.classList.remove('hidden');
+          anyVisible = true;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if(input && !anyVisible){
+        noResultText.style.display = 'block';
+      } else {
+        noResultText.style.display = 'none';
+      }
+    }
+
+    window.onload = () => setCategory('all');
+  </script>
+</body>
+</html>
